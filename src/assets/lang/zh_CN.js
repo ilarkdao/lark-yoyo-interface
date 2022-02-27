@@ -4,8 +4,8 @@ module.exports = {
         "yoyowAccout":"请输入Yoyow帐号",
         "login":"登录",
 						
-				"nftWork": "艺术作品(Hive)",
-				"photoWork": "摄影作品(Hive)",
+				"nftWork": "艺术作品",
+				"photoWork": "摄影作品",
 				"post": "发布作品",
 				"postNft": "发布艺术作品",
 				"postPhotoNft": "发布摄影作品", 
@@ -24,7 +24,13 @@ module.exports = {
 				
 				"pools": "奖励池",
         "staking":"质押奖励",
-				"farm": "SLP奖励",
+				"yours": "您的存量",
+				"totalLp": "LP总存量",
+				"add": "增加",
+				"minus": "减少",
+				"quit": "退出",
+				
+				"bridge": "跨链桥",
 
         "yourStaking":"您的质押量",
         "stakedList":"质押列表",
@@ -32,33 +38,19 @@ module.exports = {
         "hpTotaldelegate":"HP总代理量",
         "apy":"年化收益率",
 
-        "adddelegate":"增加代理",
-        "minusdelegate":"减少代理",
-        "canceldelegate":"取消代理",
-        "confirmadddelegate":"确认增加代理",
-        "confirmminusdelegate":"确认减少代理",
-        "confirmcanceldelegate":"确认取消代理",
 
         "larkProfits":"LARK收益",
         "withdraw":"提现收益",
         "balance":"余额",
+				
+				"confirmconvert": "确定兑换",
 
-        "confirmconvert":"确认兑换",
-        "servicecharge":"手续费",
-        "delegatecharge":"代理手续费",
-        "atleastcharge":"最低收取",
-        "convertrate":"兑换率",
-        "mine":"我的",
         "mywallet":"我的钱包",
         "logout":"注销",
 
         "confirmStaking":"开启质押奖励",
         "delegatedhp":"已代理HP数量",
         "wallet":"钱包",
-
-        "hiveBalance":"HIVE余额",
-        "hbdBalance":"HBD余额",
-        "delegatedHp":"HP代理额",
         "maticBalance":"MATIC余额",
         "larkBalance":"LARK余额",
 
@@ -66,13 +58,8 @@ module.exports = {
         "error":"错误",
         "delegateerror":"代理错误！",
         "tryrefreshpage":"错误，请尝试刷新页面！",
-        "steemloginerr":"Steem账户登录错误!",
-        "needkeychainandtronlink":"需要同时安装keychain钱包和 tronlink钱包！",
-        "needkeychain":"请安装steem-keychain钱包",
-        "needtronlink":"请安装tronlink钱包",
-
+				
         "whitePaper":"白皮书",
-        "userBook":"用户手册(测试网)",
         "questions":"常见问题",
         "contract":"合约地址",
         "swap":"交易对",

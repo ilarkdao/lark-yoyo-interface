@@ -31,15 +31,6 @@
         rows="6"
         max-rows="12"
       ></b-form-textarea>
-
-			<b-form-group>
-				<b-form-checkbox-group
-					id="checkbox-group-1"
-					v-model="selected"
-					:options="options"
-					name="flavour-1"
-				></b-form-checkbox-group>
-			</b-form-group>
 			
 			<div>mintFee: {{mintFee}} LARK</div>
 
@@ -112,10 +103,6 @@
           isLoadingFile: false,
 					upImageFlag: false,
 					
-					selected: ['hive'], // Must be an array reference!
-					options: [
-						{ text: this.$t('message.postToHive'), value: 'hive' }
-					],
 
           showMask:false,
           maskInfo:"",
@@ -158,7 +145,7 @@
 				  let v = await instance.methods.balanceOf(addr).call()
 				  this.balanceOfLark = this.web4.utils.fromWei(v, "ether")
 				
-				  let t = await instance.methods.allowance(addr, this.larkArtNFT).call()
+				  let t = await instance.methods.allowance(addr, this.yoyoArtNFT).call()
 				  this.allowance = this.web4.utils.fromWei(t, "ether")
 				  // console.log(366, "allowance", this.allowance)
 				},
@@ -177,7 +164,7 @@
             gasPrice: gasPrice
           }
           let amount = this.web4.utils.toWei('8000000000', 'ether')
-          await instance.methods.approve(this.larkArtNFT, amount).send(option)
+          await instance.methods.approve(this.yoyoArtNFT, amount).send(option)
         
           await this.sleep()
           await this.getBalanceAndAllowance()
@@ -226,33 +213,13 @@
 								let minters = await instance.methods.createArtNFT(tokenURI).send(option) 
 								let id = minters.events.Transfer.returnValues.tokenId
 								// console.log(1233, id) //minters.events.Transfer.returnValues.tokenId
-
-								//上传内容到hive
-								if(this.selected.includes('hive')){									
-									let parentAuthor = ''
-									let parentPermlink = 'larkart'
-									let title = this.name
-									let permlink = this.getstr()
-									let tail = '\n\n\n -> [OpenSea Sell/Buy](https://opensea.io/assets/matic/'+this.larkArtNFT+'/'+id+')'
-									let image = "![]("+this.ipfs_host+this.imgHash+")"+"\n\n"
-									let body = image+this.content + tail
-									let tags = ["larkart","nft","art","polygon","web3"]
-									let jsonMetadata = {"tags": tags, "dapp": "lark", "format": "markdown"}
-									let req = await this.postToHive(parentAuthor, parentPermlink, author, permlink, title, body, JSON.stringify(jsonMetadata))
-									if(req.success === true) {
-										await this.sleep()
-										await this.sleep()
-										this.$store.state.created = []
-										this.$router.push({path: '/'})
-										// this.$router.go(0)
-									}	else{
-										this.showMask = true
-										this.successFlag = false
-										this.maskInfo = "错误！\n"+req.message
-									}
-							 }else{
-								 this.$router.push({path: '/'})
-							 }
+								
+								this.showMask = true
+								this.maskInfo = "恭喜，作品发布成功！"
+								this.successFlag = true
+								await this.sleep()
+								this.$store.state.created = []
+								this.$router.push({path: '/'})
 							}catch (e) {
 								this.showMask = true
 								this.maskInfo = "出错啦！\n 刷新后重试！具体原因如下：\n" + e

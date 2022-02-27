@@ -318,7 +318,7 @@
 <style scoped>
 
   .wallet{
-    width: 45%;
+    width: 25%;
     max-width: 520px;
     min-width: 400px;
     margin: 2.5rem auto;

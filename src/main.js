@@ -59,8 +59,8 @@ if (typeof window.ethereum !== 'undefined'){
   console.log(111, "metamask")
   web3 = new Web3(window.ethereum)
 
-  let url = "https://polygon-rpc.com"
-	// let url = "https://matic-mainnet.chainstacklabs.com"
+  // let url = "https://polygon-rpc.com"
+	let url = "https://matic-mainnet.chainstacklabs.com"
   let web3Provider2 = new Web3.providers.HttpProvider(url)
   web4 = new Web3(web3Provider2)
 	// console.log(112, "web4", web4)
@@ -74,13 +74,18 @@ if (typeof window.ethereum !== 'undefined'){
 let larkToken = "0x4cE8485608F78921Fbc0F96e63c0566B1b176Db0"
 let larkPool = "0xD48cA0B1a9C143c8570e34F5C0dE5a9E29ffB3d3"
 let yoyoStakingPool = "0xC8f01C3cbD3558e461bb6072D0b870eDEc7bD7fd"
-// let lpToken = "0xf6d625e6168f8b3cd96cbf3b8a32bece38d0775a"  //DAI-LARK
+let lpToken = "0xf6d625e6168f8b3cd96cbf3b8a32bece38d0775a"  //DAI-LARK
+let lpYoyo = "0xc237BD7288Bc5465ab1C5Ef2462B876adbF476E3"   //DAI-WYOYO
+let wyoyo = "0x4369bAD2aBb80a234f38757A4b3406cA8818c3b4"
+
+let yoyoArtNFT = "0x468402778A628Fb8A4b2Def65a0624a21846A7C9"
+let openseaLink = "https://opensea.io/assets/matic/"+yoyoArtNFT+'/'
 
 let mintFee = 50
 let addGas = 5e9  //5 GWei
 
 
-// import {timeFormat} from "./utils/timeFormat"
+import {timeFormat} from "./utils/timeFormat"
 // import {formatSeconds} from "./utils/formatSeconds"
 // import {getstr} from "./utils/getstr"
 // import {approve} from "./utils/approve"
@@ -90,10 +95,11 @@ import {formatData} from "./utils/formatData"
 import {getDelegateInstance} from "./utils/pool/getDelegateInstance"
 import {getPoolInstance} from "./utils/pool/getPoolInstance"
 import {getLarkInstance} from "./utils/token/getLarkInstance"
-// import {getArtInstance} from "./utils/art/getArtInstance" 
+import {getWyoyoInstance} from "./utils/token/getWyoyoInstance"
+import {getArtInstance} from "./utils/art/getArtInstance" 
 
 
-// Vue.prototype.timeFormat = timeFormat
+Vue.prototype.timeFormat = timeFormat
 // Vue.prototype.formatSeconds = formatSeconds
 // Vue.prototype.getstr  = getstr
 // Vue.prototype.approve = approve
@@ -105,13 +111,16 @@ Vue.prototype.formatData = formatData
 Vue.prototype.getDelegateInstance = getDelegateInstance
 Vue.prototype.getPoolInstance = getPoolInstance
 Vue.prototype.getLarkInstance = getLarkInstance
-// Vue.prototype.getArtInstance = getArtInstance
-// Vue.prototype.lpToken = lpToken
+Vue.prototype.getWyoyoInstance = getWyoyoInstance 
+Vue.prototype.getArtInstance = getArtInstance
+Vue.prototype.lpToken = lpToken
+Vue.prototype.lpYoyo = lpYoyo  
 Vue.prototype.larkToken = larkToken  
+Vue.prototype.wyoyo = wyoyo
 Vue.prototype.larkPool = larkPool
 Vue.prototype.yoyoStakingPool = yoyoStakingPool
-// Vue.prototype.larkArtNFT = larkArtNFT
-// Vue.prototype.larkPhotoNFT = larkPhotoNFT
+Vue.prototype.yoyoArtNFT = yoyoArtNFT  
+Vue.prototype.openseaLink = openseaLink
 Vue.prototype.addGas = addGas
 Vue.prototype.axios = axios 
 Vue.prototype.mintFee = mintFee 

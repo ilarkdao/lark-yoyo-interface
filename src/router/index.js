@@ -9,25 +9,26 @@ import PhotoNft from '../components/PhotoNft'
 import CreatePhotoNft from '../components/CreatePhotoNft'
 
 import Pool from '../components/Pool'
-import SlpFarm from '../components/farm/SlpFarm'
+import Bridge from '../components/Bridge'
+import LarkFarm from '../components/farm/LarkFarm'
+import WyoyoLp from '../components/farm/WyoyoLp'
 
 import Wallet from "../components/Wallet"
 import Contract from "../components/about/Contract"
 import Contact from "../components/about/Contact"
 import DelegatorLists from "../components/about/DelegatorLists"
-import Newbie from "../components/about/Newbie"
 
 
 Vue.use(VueRouter)
 
 const routes = [
+	// {
+	//   path: '/test',
+	//   name: 'test',
+	//   component: Test,
+	// },
 	{
-	  path: '/test',
-	  name: 'test',
-	  component: Test,
-	},
-	{
-	  path: '/art',
+	  path: '/',
 	  name: 'ArtNft',
 	  component: ArtNft,
 	},
@@ -37,17 +38,35 @@ const routes = [
 	  component: PhotoNft,
 	},
   {
-    path: '/',
+    path: '/pool',
     name: 'pool',
     component: Pool,
 		meta:{
 				requireAuth:true
 		}
   },
+	
+	{
+	  path: '/bridge',
+	  name: 'bridge',
+	  component: Bridge,
+		meta:{
+				requireAuth:true
+		}
+	}, 
+	
+	{
+	  path: '/wyoyofarm',
+	  name: 'WyoyoLp',
+	  component: WyoyoLp,
+	  meta:{
+	    requireAuth:true
+	  }
+	},
   {
-    path: '/farm',
-    name: 'slpfarm',
-    component: SlpFarm,
+    path: '/larkfarm',
+    name: 'larkfarm',
+    component: LarkFarm,
     meta:{
       requireAuth:true
     }
@@ -94,11 +113,6 @@ const routes = [
     name: 'contact',
     component: Contact
   },
-	{
-	  path: '/newbie',
-	  name: 'newbie',
-	  component: Newbie
-	},
   {
     path: '/delegatorlists',
     name: 'delegatorlists',

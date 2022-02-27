@@ -12,13 +12,14 @@
           <b-row >
               <b-col sm="12" md="6" lg="4" v-for="post in search(keywords)">
                 <div class="content" >
-									<b-img :src="post.body | takeImage" fluid-grow rounded class="courseimg"></b-img>
+									<b-img :src="post.image" fluid-grow rounded class="courseimg"></b-img>
                   <div class="title">
-                    <span style="font-size: 1.2rem">{{ post.title }}</span><br>
-                    <p class="posttime">@{{ post.author }} 　{{ post.created  | formatTime}}</p>
+                    <span style="font-size: 1.2rem">{{ post.name }}</span><br>
+                    <p class="posttime"><span style="margin-right: 0.7rem">@{{post.attributes[0].value}}</span>   
+										{{timeFormat(post.attributes[1].value)}} </p> 
                   </div>
-                  <p style="padding: 0 1rem 2.5rem 1rem">{{ post.body | abstractFn }}</p>
-									<div class="opensealink">- <a :href="post.body | takeLink" target="_blank" class="openseatext">{{ $t('message.opensea') }}</a> - </div>
+                  <p style="padding: 0 1rem 2.5rem 1rem">{{ post.description | abstractFn }}</p>
+									<div class="opensealink">- <a :href=openseaLink+post.id target="_blank" class="openseatext">{{ $t('message.opensea') }}</a> - </div>
                 </div>
 								
               </b-col>
@@ -52,9 +53,9 @@
       </div>
     </transition>
 
-    <div class="btn">
+    <!-- <div class="btn">
       <b-button variant="outline-primary" @click="getNext">more</b-button>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -77,98 +78,74 @@
           }
       },
       methods:{
-				async getAllusers(){
-					await this.getArtInstance()
+				async getAllURI(){
 					let instance = this.$store.state.artInstance2
-					
-					//getAllURI(uint256 _id, uint256 _limit)
-					// let id = 1
-					// let limit = 2
 				
-					let xid = await instance.methods.id().call()
-					console.log(22, "id", xid, instance) //ownerOf
+					// let xid = await instance.methods.id().call()
+					// console.log(22, "id", xid) //ownerOf
 					// let owner = await instance.methods.ownerOf(id).call()
 					// console.log(68, owner)
 					
-					let users = await instance.methods.getAllOwner().call()
-					console.log(688, users)
+					let uri = await instance.methods.getAllURI().call()				
+					let work = []
+					for(let i = 0; i < uri.length; i ++){					
+						// this.getContent(uri[i].slice(-46))
+						let res = await this.getContent(uri[i].slice(-46))
+						res.id = i
+						work.push(res)
+					}
 					
-					let uri = await instance.methods.getAllURI().call()
-					console.log(689, uri)
-					
-					// let users2 = await instance.methods.getOwnersbyLimit(id, limit).call()
-					// console.log(6882, users2)
-					
-					// let uri2 = await instance.methods.getURIbyLimit(id, limit).call()
-					// console.log(6883, uri2)
-		
-					
+					this.posts = work.reverse()
+
+					//将得到的数据存入vuex中
+					this.$store.commit('saveCreated', this.posts)
+				},
+				utf8ArrayToStr(array) {
+				  let out, i, len, c
+				  let char2, char3
+				  out = ""
+				  len = array.length
+				  i = 0
+				  while(i < len) {
+				      c = array[i++]
+				      switch(c >> 4)
+				      {
+				          case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7:
+				          // 0xxxxxxx
+				          out += String.fromCharCode(c)
+				          break
+				          case 12: case 13:
+				          // 110x xxxx   10xx xxxx
+				          char2 = array[i++]
+				          out += String.fromCharCode(((c & 0x1F) << 6) | (char2 & 0x3F))
+				          break
+				          case 14:
+				              // 1110 xxxx  10xx xxxx  10xx xxxx
+				              char2 = array[i++];
+				              char3 = array[i++];
+				              out += String.fromCharCode(((c & 0x0F) << 12) |
+				                  ((char2 & 0x3F) << 6) |
+				                  ((char3 & 0x3F) << 0))
+				              break
+				      }
+				  }
+				  return out
+				},
+				async getContent(hash){
+					for await (const chunk of this.ipfs.cat(hash)) {
+						return JSON.parse(this.utf8ArrayToStr(chunk))
+					}
 				},
         search(keywords){
           let posts = this.posts
           return posts.filter(item => {
-            if(item.title.includes(keywords)){
+            if(item.name.includes(keywords)){
               // console.log(166, '查到了！')
               return item
             }
           })
         },
-				larkFilter(data){
-					// let tag = "larkarttest"
-					return data.filter(item => {
-						// if(JSON.parse(item.json_metadata).tags.includes(tag)){
-					  if(JSON.parse(item.json_metadata).dapp === "lark"){
-					    // console.log(166, '查到了！')
-					    return item
-					  }
-					})
-				},
 
-        getCreated(){
-            let that = this
-            let query = { tag: "larkart", limit : 20 }  //larkarttest  hive-105017
-            this.hive.api.getDiscussionsByHot(query, function(err, data) {
-              // console.log(123, data)
-							if(data.length == 0){
-								that.isLoading = false
-								alert("暂没有作品！")
-							}
-
-              // that.posts = that.larkFilter(data)
-							that.posts = data
-              //取到最后一篇文章的author和Permlink，做为下一次查询的起始点
-              that.author = data[data.length - 1].author
-              that.permlink = data[data.length - 1].permlink
-              //将得到的数据存入vuex中
-              that.$store.commit('saveCreated', data)
-              that.isLoading = false
-            })
-          },
-
-        getNext(){
-          let that = this
-          that.isLoading = true  
-          let query = {tag: "larkart", limit: 20, start_author: this.author, start_permlink: this.permlink}
-          this.hive.api.getDiscussionsByHot(query, function(err, data) {
-            // console.log(43, data)
-            if(data.length == 0){
-              that.isLoading = false
-              alert('没有更多了！')
-              return
-            }
-            data.forEach(post => {
-              if (post.permlink != that.permlink) {
-                that.posts.push(post)
-              }
-            })
-            //取到最后一篇文章的author和Permlink，做为下一次查询的起始点
-            that.author = data[data.length - 1].author
-            that.permlink = data[data.length - 1].permlink
-            //将得到的数据存入vuex中
-            that.$store.commit('saveCreated', that.posts)
-            that.isLoading = false
-          })
-        }
       },
 
       components: {
@@ -176,67 +153,38 @@
       },
 
       mounted() {
-        //如果vuex中有值，则直接取出，否则从steem网络中取
-        if(this.$store.state.created != false){
-          this.posts = this.$store.state.created
-          this.isLoading = false
-
-          //把初始化的数值补回
-          let data = this.$store.state.created
-          this.author = data[data.length - 1].author
-          this.permlink = data[data.length - 1].permlink
-        }else{
-          this.getCreated()
+        let that = this
+        let instance = this.$store.state.artInstance2
+        async function main(){
+          if(Object.keys(instance).length === 0){
+            //如果刷新页面, instance未定义
+            // console.log(888, "instance为空，是刷新页面")
+            await that.getArtInstance()
+						await that.getLarkInstance()
+						await that.getAllURI()
+            that.isLoading = false
+          } else{
+      			// console.log(444, "切换页面")				
+						if(that.$store.state.created != false){
+							that.posts = that.$store.state.created
+							that.isLoading = false
+						}else{
+							await that.getAllURI()
+							that.isLoading = false
+						}
+						
+          }
+      
         }
+        main()
       },
 
       filters:{
-        formatTime(data){
-          return data.substring(0,10)
-        },
-        takeImage(text){
-          let reg = /!\[(.*?)\]\((.*?)\)/
-          // let reg = /\!\[.*?\)/
-          let a = text.match(reg)
-          if(a === null){
-            return
-          }
-          return a[2]
-        },
-				
-				takeLink(text){
-				  let reg = /https\:\/\/opensea\.io\/assets\/matic\/.*\/[0-9]+/
-					//https://opensea.io/assets/matic/
-				  let a = text.match(reg)
-				  if(a === null){
-				    return
-				  }
-				  return a[0]
+				abstractFn(res){
+					return res.substring(0,180)
 				},
-        abstractFn(res){
-          if(!res){
-            return ''
-          }else{
-            let str=res.replace(/(\*\*|__)(.*?)(\*\*|__)/g,'')          //全局匹配内粗体
-                    .replace(/\!\[[\s\S]*?\]\([\s\S]*?\)/g,'')           //全局匹配图片
-                    .replace(/\([\s\S]*?\)/g,'')                              //全局匹配连接
-                    .replace(/<\/?.+?\/?>/g,'')                             //全局匹配内html标签
-                    .replace(/http.*\w/g,'')                              //全局http连接
-                    .replace(/(\*)(.*?)(\*)/g,'')                               //全局匹配内联代码块
-                    .replace(/`{1,2}[^`](.*?)`{1,2}/g,'')                       //全局匹配内联代码块
-                    .replace(/```([\s\S]*?)```[\s]*/g,'')                       //全局匹配代码块
-                    .replace(/\~\~(.*?)\~\~/g,'')                               //全局匹配删除线
-                    .replace(/[\s]*[-\*\+]+(.*)/g,'')                           //全局匹配无序列表
-                    .replace(/[\s]*[0-9]+\.(.*)/g,'')                           //全局匹配有序列表
-                    .replace(/(#+)(.*)/g,'')                                    //全局匹配标题
-                    .replace(/(>+)(.*)/g,'')                                    //全局匹配摘要
-                    .replace(/\r\n/g,"")                                        //全局匹配换行
-                    .replace(/\n/g,"")                                          //全局匹配换行
-            // .replace(/\s/g,"")                                          //全局匹配空字符;
-            return str.slice(0,80)
-          }
-        }
-
+        
+        
       },
     }
 </script>

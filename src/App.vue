@@ -7,7 +7,7 @@
 
       <div class="logos" v-if="$store.state.username ">
           <span style="margin-right: 1rem" @click="mywallet">
-            <img class="account-icon" src="../static/images/yoyow.png" alt="yoyow">{{ $store.state.username }}
+            <img class="account-icon" src="../static/images/yoyo.svg" alt="yoyow">{{ $store.state.username }}
           </span>
           <span @click="mywallet">
             <img class="account-icon" src="../static/images/polygon.svg" alt="polygon">{{$store.state.addr | formatAddr}}
@@ -17,10 +17,9 @@
 
       <!--模块-->
       <div class="module">
-				<!-- <span class="module-title" :class="moduleIndex === '1' ? 'active': 'noActive'" @click="artNft">NFT</span> -->
-        <span class="module-disable">NFT</span>
+				<span class="module-title" :class="moduleIndex === '1' ? 'active': 'noActive'" @click="artNft">NFT</span>
 				<span class="module-title" :class="moduleIndex === '2' ? 'active': 'noActive'" @click="pools">{{ $t('message.pools') }}</span>
-        <span class="module-disable">跨链桥</span>
+				<span class="module-title" :class="moduleIndex === '3' ? 'active': 'noActive'" @click="bridge">{{ $t('message.bridge') }}</span>
       </div>
       <!--//模块-->
 
@@ -32,17 +31,17 @@
 				<b-navbar-nav class="ml-auto" style="display:block" v-if="moduleIndex === '1'">
 				  <div class="loginfo">
 						<button class="right-item" @click="artNft">{{ $t('message.nftWork') }}</button>
-						<button class="right-item" @click="photoNft">{{ $t('message.photoWork') }}</button>
+						<!-- <button class="right-item" @click="photoNft">{{ $t('message.photoWork') }}</button> -->
 						
 						<div class="drop">
 						    <b-dropdown id="dropdown-grouped" :text="this.$t('message.post')" variant="transparent" class="m-2">
 						    <b-dropdown-item-button @click="nft">
 						      {{ $t('message.postNft') }}
 						    </b-dropdown-item-button>
-						    <b-dropdown-divider></b-dropdown-divider>
+						    <!-- <b-dropdown-divider></b-dropdown-divider>
 						    <b-dropdown-item-button @click="postPhoto">
 						      {{ $t('message.postPhotoNft') }}
-						    </b-dropdown-item-button>
+						    </b-dropdown-item-button> -->
 						  </b-dropdown>
 						</div>
 						
@@ -63,8 +62,8 @@
 				          <b-dropdown id="dropdown-grouped" :text="this.$t('message.about')" variant="transparent" class="m-2">
 				
 				          <b-dropdown-item-button>
-				            <!-- <a target="_blank" href="#">{{ $t('message.docs') }}</a> -->
-										<router-link to="/newbie">{{ $t('message.newbie') }}</router-link>
+				            <a target="_blank" href="https://doc.ilark.io/">{{ $t('message.docs') }}</a>
+										<!-- <router-link to="/newbie">{{ $t('message.newbie') }}</router-link> -->
 				          </b-dropdown-item-button>
 				           <b-dropdown-divider></b-dropdown-divider>
 				
@@ -102,7 +101,8 @@
         <b-navbar-nav class="ml-auto" style="display:block" v-if="moduleIndex === '2'">
           <div class="loginfo">
             <button class="right-item" @click="pools">{{ $t('message.staking') }}</button>
-            <!-- <button class="right-item" @click="slpfarm">{{ $t('message.farm') }}</button> -->
+						<button class="right-item" @click="wyoyofarm">WYOYO-DAI LP</button>
+            <button class="right-item" @click="larkfarm">LARK-DAI LP</button>
 						
             <div class="drop">
                 <b-dropdown id="dropdown-grouped" :text="this.$t('message.language')" variant="transparent" class="m-2">
@@ -125,8 +125,8 @@
                   </b-dropdown-item-button> -->
 
                   <b-dropdown-item-button>
-                    <!-- <a target="_blank" href="#">{{ $t('message.docs') }}</a> -->
-										<router-link to="/newbie">{{ $t('message.newbie') }}</router-link>
+										<a target="_blank" href="https://doc.ilark.io/">{{ $t('message.docs') }}</a>
+										<!-- <router-link to="/newbie">{{ $t('message.newbie') }}</router-link> -->
                   </b-dropdown-item-button>
                    <b-dropdown-divider></b-dropdown-divider>
 
@@ -159,6 +159,59 @@
           </div>
         </b-navbar-nav>
         <!-- 切换模块 pool-->
+				
+				<!-- 切换模块 bridge-->
+				<b-navbar-nav class="ml-auto" style="display:block" v-if="moduleIndex === '3'">
+				  <div class="loginfo">					
+				    <div class="drop">
+				        <b-dropdown id="dropdown-grouped" :text="this.$t('message.language')" variant="transparent" class="m-2">
+				        <b-dropdown-item-button @click="setzhlang">
+				          {{ $t('message.zh') }}
+				        </b-dropdown-item-button>
+				
+				        <b-dropdown-divider></b-dropdown-divider>
+				        <b-dropdown-item-button @click="setenlang">
+				          {{ $t('message.en') }}
+				        </b-dropdown-item-button>
+				      </b-dropdown>
+				    </div>
+				
+				      <div class="drop">
+				          <b-dropdown id="dropdown-grouped" :text="this.$t('message.about')" variant="transparent" class="m-2">
+				          <b-dropdown-item-button>
+										<a target="_blank" href="https://doc.ilark.io/">{{ $t('message.docs') }}</a>
+				          </b-dropdown-item-button>
+				           <b-dropdown-divider></b-dropdown-divider>
+				
+				          <b-dropdown-item-button>
+				            <a target="_blank" href="https://github.com/ilarkdao">Github</a>
+				          </b-dropdown-item-button>
+				           <b-dropdown-divider></b-dropdown-divider>
+				
+				          <b-dropdown-item-button>
+				            <router-link to="/contract">{{ $t('message.contract') }}</router-link>
+				          </b-dropdown-item-button>
+				           <b-dropdown-divider></b-dropdown-divider>
+				          <b-dropdown-item-button>
+				             <router-link to="/delegatorlists">{{ $t('message.stakedList') }}</router-link>
+				          </b-dropdown-item-button>
+				          <b-dropdown-divider></b-dropdown-divider>
+				          <b-dropdown-item-button>
+				            <a target="_blank" href="https://discord.gg/p9KTdmVrfb">Discord</a>
+				          </b-dropdown-item-button>
+				
+								<div v-if="$store.state.username">
+										<b-dropdown-divider></b-dropdown-divider>
+										<b-dropdown-item-button @click="logout" style="text-align:center">
+											{{ $t('message.logout') }}
+										</b-dropdown-item-button>
+								</div>
+				        </b-dropdown>
+				    </div>
+				
+				  </div>
+				</b-navbar-nav>
+				<!-- 切换模块 bridge-->
 
         
       </b-collapse>
@@ -180,9 +233,9 @@
     },
     methods: {
       backtoindex(){
-        this.moduleIndex = '2'
+        this.moduleIndex = '1'
         let moduleIndex = 'moduleIndex'
-        localStorage.setItem(moduleIndex, '2')
+        localStorage.setItem(moduleIndex, '1')
 
         this.$router.push({path: '/'})
       },
@@ -207,12 +260,21 @@
         this.moduleIndex = '2'
         let moduleIndex = 'moduleIndex'
         localStorage.setItem(moduleIndex, '2')
-				// this.$router.push({path: '/pool'})
-        this.$router.push({path: '/'})
+				this.$router.push({path: '/pool'})
       },
-      
-      slpfarm(){
-        this.$router.push({path: '/farm'})
+      bridge(){
+        this.moduleIndex = '3'
+        let moduleIndex = 'moduleIndex'
+        localStorage.setItem(moduleIndex, '3')
+      	// this.$router.push({path: '/pool'})
+        this.$router.push({path: '/bridge'})
+      }, 
+			
+			wyoyofarm(){
+			  this.$router.push({path: '/wyoyofarm'})
+			},
+      larkfarm(){
+        this.$router.push({path: '/larkfarm'})
       },
       mywallet(){
         this.$router.push({path: '/wallet'})
@@ -249,14 +311,14 @@
       //初始化
       let moduleIndex = 'moduleIndex'
       if(localStorage.getItem(moduleIndex) == null){
-        localStorage.setItem(moduleIndex, '2')
+        localStorage.setItem(moduleIndex, '1')
       }
 
       // console.log(125, "url", this.$route.path)
       if(this.$route.path === '/'){
-        this.moduleIndex = '2'
+        this.moduleIndex = '1'
         let moduleIndex = 'moduleIndex'
-        localStorage.setItem(moduleIndex, '2')
+        localStorage.setItem(moduleIndex, '1')
         // this.$router.push({path: '/'})
       }
 

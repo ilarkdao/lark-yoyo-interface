@@ -99,7 +99,7 @@
 						// baseURL: 'https://steemjiang.com:8091/rpc',
 						headers: {'X-Requested-With': 'XMLHttpRequest',		
 											"Content-Type": "application/json;charset=utf-8"},					
-						data: {"jsonrpc": "2.0", "method": "call", "params": ["history", "get_relative_account_history", [384452518, null, 0,10,0]], "id": 1}
+						data: {"jsonrpc": "2.0", "method": "call", "params": ["history", "get_relative_account_history", [439202012, null, 0,10,0]], "id": 1}
 				  })
 				  .then( (arg) => {
 				      console.log(255,arg)  
@@ -111,9 +111,9 @@
 		},
 		
 		mounted() {
-			this.testm()
-			this.testp()
-			// this.test()
+			// this.testm()
+			// this.testp()
+			this.test()
 		}
 
 

@@ -20,6 +20,9 @@ export default new Vuex.Store({
     larktokenInstance: {},
     larktokenInstance2: {},
 		ercAbi: [],
+		
+		wyoyoInstance: {},
+		wyoyoInstance2: {},
 
 
     artInstance: {},
@@ -67,6 +70,14 @@ export default new Vuex.Store({
     },
 		saveERCAbi: function (state, abi){
 		  state.ercAbi = abi
+		},
+		
+		//wyoyoInstance
+		saveWyoyoInstance: function (state, instance){
+		  state.wyoyoInstance = instance
+		},
+		saveWyoyoInstance2: function (state, instance2){
+		  state.wyoyoInstance2 = instance2
 		},
 
     saveArtInstance: function (state, instance){

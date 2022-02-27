@@ -28,7 +28,7 @@
     name: "DelegatorLists",
     data() {
       return {
-        fields: ['id', 'yoyoId', 'polygon', 'stakedAmount'],
+        fields: ['id', 'yoyoId', 'polygon', 'stakedAmount', 'PendingRewards'],
         // items: [
         //   { isActive: true, id: 1, steemId: 'Dickerson', tron: 'Macdonald', delegatedSP: 20 },
         // ],
@@ -59,7 +59,10 @@
           let p = delegators[i]
           let res = infos[i]
           let amount = (res.amount * 1e-5).toFixed(3)
-          let t = { isActive: true, id: i, yoyoId: res.yoyoAccount, polygon: p, stakedAmount: amount }
+					let rewardsT = await delegatePool.methods.getPendinglark(p).call()
+					let rewardsP = this.web4.utils.fromWei(rewardsT, "ether")
+					let rewards = this.formatData(rewardsP)
+          let t = { isActive: true, id: i, yoyoId: res.yoyoAccount, polygon: p, stakedAmount: amount, PendingRewards: rewards }
           this.lists.push(t)
         }
 				this.loadingFlag = false

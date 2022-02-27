@@ -4,8 +4,8 @@ module.exports = {
         "yoyowAccout":"Input Yoyow Account",
         "login":"Login",
 				
-				"nftWork": "Art Works(Hive)",
-				"photoWork": "Photograph(Hive)",
+				"nftWork": "Art",
+				"photoWork": "Photograph",
 				"post": "Post Nft",
 				"postNft": "Post Art Nft",
 				"postPhotoNft": "Post Photograph Nft", 
@@ -24,7 +24,13 @@ module.exports = {
 				
 				"pools": "Pools",
         "staking":"Staking Rewards",
-				"farm": "Farm",
+				"yours": "Yours",
+				"totalLp": "Total Lp",
+				"add": "Add",
+				"minus": "Minus",
+				"quit": "Quit",
+				
+				"bridge": "Bridge",
 
         "yourStaking":"Staking Amount",
         "stakedList":"StakedList",
@@ -32,32 +38,18 @@ module.exports = {
         "hpTotaldelegate":"Total Delegated HP",
          "apy":"APY",
 
-        "adddelegate":"Increase",
-        "minusdelegate":"Decrease",
-        "canceldelegate":"Quit",
-        "confirmadddelegate":"Confirm Increase",
-        "confirmminusdelegate":"Confirm Decrease",
-        "confirmcanceldelegate":"Confirm Quit",
-
         "larkProfits":"LARK Rewards",
         "withdraw":"Withdraw LARK",
         "balance":"Balance",
-        "confirmconvert":"Confirm Conversion",
-        "servicecharge":"Transaction Fee",
-        "delegatecharge":"Delegation Fee",
-        "atleastcharge":"minimum",
-        "convertrate":"Conversion Ratio",
-        "mine":"My Account",
+				
+				"confirmconvert": "Confirm",
+				
         "mywallet":"My Wallet",
         "logout":"Logout",
 				
         "confirmStaking":"Confirm Staking",
         "delegatedhp":"Delegated HP",
         "wallet":"Wallet",
-
-        "hiveBalance":"HIVE Balance",
-        "hbdBalance":"HBD Balance",
-        "delegatedHp":"delegated Balance",
         "maticBalance":"MATIC Balance",
         "larkBalance":"LARK Balance",
 
@@ -65,13 +57,8 @@ module.exports = {
         "error":"Error!",
         "delegateerror":"Delegation Error！",
         "tryrefreshpage":"Error，please refresh page and try again！",
-        "steemloginerr":"Steem login failed!",
-        "needkeychainandtronlink":"Need to install Steem Keychain and TronLink！",
-        "needkeychain":"Please install Steem Keychain",
-        "needtronlink":"Please install TronLink",
 
         "whitePaper":"White Paper",
-        "userBook":"User Handbook",
         "questions":"Questions",
         "contract":"Contract",
         "swap":"Swap",

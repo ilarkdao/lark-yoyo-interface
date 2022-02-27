@@ -9,7 +9,7 @@
       <div class="round-box">
         <div class="round-box-title-container">
           <p class="box-title">
-            <img class="coin-icon" src="../../static/images/yoyow.png" alt="yoyow">
+            <img class="coin-icon" src="../../static/images/yoyo.svg" alt="yoyow">
           </p>
           <p class="box-title">
             <b-input

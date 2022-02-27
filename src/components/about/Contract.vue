@@ -14,11 +14,15 @@
         0xC8f01C3cbD3558e461bb6072D0b870eDEc7bD7fd
       </p>
 			
-			<!-- <p><strong>Lark Art NFT</strong> <br>
-			  0xA338108f5Cac545f1E9E4De1E97D745434104bc7
+			<p><strong>WYOYO</strong> <br>
+			  0x4369bAD2aBb80a234f38757A4b3406cA8818c3b4
 			</p>
 			
-			<p><strong>Lark Photograph NFT</strong> <br>
+			<p><strong>Yoyo Art Gallery</strong> <br>
+			  0x468402778A628Fb8A4b2Def65a0624a21846A7C9
+			</p>
+			
+			<!-- <p><strong>Lark Photograph NFT</strong> <br>
 			  0x8148127575a4f1B8587BbDc0cefaa64c1af25D4e
 			</p> -->
 
