@@ -184,7 +184,7 @@
               let metaDate = {
                 "name": this.name,
                 "description": this.content,
-                "external_url": "https://hive.blog/@"+author,
+                "external_url": "https://yoyo.ilark.io",
                 "image": this.ipfs_host+this.imgHash,
                 "attributes": [
                   {
